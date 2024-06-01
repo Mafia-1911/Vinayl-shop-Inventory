@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 class ErrorAccessCodeException extends Exception{
@@ -7,11 +9,12 @@ class ErrorAccessCodeException extends Exception{
     }
 }
 public class Driver {
-
+    static LocalDateTime date;
     public static void main(String[] args) throws ErrorAccessCodeException {
 
         Scanner cs = new Scanner(System.in);
         Inventory inventory = new Inventory();
+        Invoice invoice=new Invoice();
 
         while (true) {
             System.out.println("\n\n\n\n**************************************************************");
@@ -72,6 +75,12 @@ public class Driver {
                         Game game = new Game(name, id, price, genre, year, discount, stock, developer);
                         inventory.addItem(game);
                         System.out.print("Stock Added : \n" + stock);
+                        invoice.addProduct(game);
+                        System.out.println("Do you want to remove it from invoice? ");
+                        int n1=cs.nextInt();
+                        if(n1==1){
+                            invoice.removeProduct(game);
+                        }
                     } else if (takeInput() == 2) {
                         //code for adding music
                         //Scanner cs=new Scanner(System.in);
@@ -82,6 +91,7 @@ public class Driver {
                         System.out.println("Enter the price");
                         price = cs.nextDouble();
                         System.out.println("Enter the genre");
+                        genre=cs.nextLine();
                         genre = cs.nextLine();
                         System.out.println("Enter the year");
                         year = cs.nextInt();
@@ -95,6 +105,12 @@ public class Driver {
                         Music music = new Music(name, id, price, genre, year, discount, sstock, artist);
                         inventory.addItem(music);
                         System.out.print("Stock: " + sstock);
+                        invoice.addProduct(music);
+                        System.out.println("Do you want to remove it from invoice? ");
+                        int n1=cs.nextInt();
+                        if(n1==1){
+                            invoice.removeProduct(music);
+                        }
                     } else if (takeInput() == 3) {
                         //code for adding movies
                         System.out.println("Enter the name for adding to the movie category");
@@ -118,6 +134,13 @@ public class Driver {
                         Movie movie = new Movie(name, id, price, genre, year, discount, ssstock, director);
                         inventory.addItem(movie);
                         System.out.print("Stock: " + ssstock);
+                        invoice.addProduct(movie);
+                        System.out.println("Do you want to remove it from invoice? ");
+                        int n1=cs.nextInt();
+                        if(n1==1){
+                            invoice.removeProduct(movie);
+                        }
+
 
                     } else throw new ErrorAccessCodeException("Please enter a valid initializer");
                 }
@@ -153,19 +176,43 @@ public class Driver {
 
                     throw new ErrorAccessCodeException("Invalid Number");
                 }
-            }else if(takeInput()==2){
-                //code for invoice
+            }else if(takeInput()==2) {
+//  //////////////////////              ////////code for invoice
                 System.out.println("Generating invoice");
+                System.out.println(invoice.getInvoice());
 
 
 
-            }else if(takeInput()==3){
+
+//
+//                System.out.println("What do you want to add to invoice ");
+//                System.out.println("Enter the type of product: ");
+//                String typeProduct=cs.nextLine();//Product
+//                System.out.println("Genre");
+//                String genre1=cs.nextLine();
+//                System.out.println("Name");
+//                String name1=cs.nextLine();
+//                System.out.println("Enter the price please");
+//                int price1=cs.nextInt();
+//                System.out.println("Printing invoice");
+//                //DateTimeFormatter dtf=DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//                //System.out.println(date.format(dtf));
+//                System.out.println("2024-06-01 1:12:20\n "+typeProduct+" Is purchased of "+genre1+ "\n Name: "+name1+" Price: "+price1);
+//                System.out.println("Invoice Generated , Thank you for Using ");
+//
+
+//
+
+                } else if(takeInput()==3){
                 System.out.println("Thank you for using our system ");
                 break;
-            }else{
+        } else{
                 throw new ErrorAccessCodeException("Invalid Input");
             }
         }
+
+
+        System.out.println("Reached the end of the program");
     }
 
     public static int takeInput() {
